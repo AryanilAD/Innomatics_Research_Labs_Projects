@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Validator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='E:\Flask_app\static\css\style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="gradien-background"></div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('welcome') }}">Menu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        Apps
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ url_for('regex_app') }}">Regex App</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('email_validator') }}">Email Validator</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>Email Validator</h2>
+    <form action="{{ url_for('validate_email') }}" method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Enter Email Address:</label>
+            <input type="text" class="form-control" id="email" name="email" required 
+                   placeholder="e.g., example@domain.com" 
+                   value="{{ email if email is not none else '' }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Validate</button>
+    </form>
+
+    {% if email is not none and is_valid is not none %}
+        <div class="mt-3 alert {{ 'alert-success' if is_valid else 'alert-danger' }}">
+            {{ email }} is {{ 'valid' if is_valid else 'invalid' }}.
+        </div>
+    {% endif %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Starting color and transition increment
+    let color1 = [255, 236, 200]; // #FFECC8
+    let color2 = [255, 218, 179]; // Light variant
+    let currentColor = [...color1];
+    let colorChangeStep = 0.5;
+
+    function interpolateColor(color1, color2, factor) {
+        return color1.map((c, i) => Math.round(c + factor * (color2[i] - c)));
+    }
+
+    function rgbToHex(r, g, b) {
+        return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    }
+
+    function updateBackgroundColor() {
+        // Switch directions at the end points
+        let factor = Math.abs(Math.sin(Date.now() / 2000)); // Smooth transition factor between 0 and 1
+        let interpolatedColor = interpolateColor(color1, color2, factor);
+        let hexColor = rgbToHex(...interpolatedColor);
+
+        // Apply color to the body background
+        document.body.style.backgroundColor = hexColor;
+
+        // Continue the loop
+        requestAnimationFrame(updateBackgroundColor);
+    }
+
+    // Start the color transition
+    updateBackgroundColor();
+</script>
+
+</body>
+</html>
