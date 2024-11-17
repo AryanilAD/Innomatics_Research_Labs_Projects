@@ -1,0 +1,35 @@
+/* Full-page gradient background animation */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Gradient animation */
+.gradient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Places the background behind other content */
+    background: linear-gradient(45deg, #FFECC8, #FFDAB3, #FBCBB1, #ECD7B1, #E6CCC9);
+    background-size: 300% 300%;
+    animation: gradientShift 10s ease infinite;
+    z-index: -1;
+}
+
+/* Smooth gradient transition */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Ensures main content is above background */
+.main-container {
+    position: relative;
+    z-index: 1;
+}
