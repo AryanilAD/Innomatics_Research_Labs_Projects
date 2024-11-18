@@ -4,8 +4,8 @@ import time
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv(dotenv_path="E:\GEN AI application\.env_app\.env_app.txt")
+# Load environment variables create a text file that contains your API key
+load_dotenv(dotenv_path="path to your file where the API key is stored")
 
 # Load the API key from .env file
 api_key = os.getenv("API_KEY")
